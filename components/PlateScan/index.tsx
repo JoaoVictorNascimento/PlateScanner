@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
 import { styles } from "./styles";
+import { usePlateScanner } from "./hooks/usePlateScanner";
 
 export default function PlateScan() {
     const backCamera = useCameraDevice('back');
     const cameraRef = useRef<Camera>(null);
     const { hasPermission, requestPermission } = useCameraPermission();
     const [isCameraActive, setIsCameraActive] = useState(false);
+    const { isCapturing } = usePlateScanner(cameraRef);
 
     useEffect(() => {
         const setupCamera = async () => {
@@ -31,7 +33,6 @@ export default function PlateScan() {
         setupCamera();
     }, [requestPermission]);
 
-    // Loading state
     if (!hasPermission) {
         return (
             <View style={styles.plateScanContainer}>
@@ -60,12 +61,10 @@ export default function PlateScan() {
                 device={backCamera}
                 isActive={isCameraActive}
                 photo={true}
-                video={false}
-                audio={false}
             />
             <View style={styles.overlayContainer}>
                 <Text style={styles.plateStyle}>
-                    Câmera Ativa - Procurando Placas
+                    {isCapturing ? "Capturando fotos..." : "Captura pausada"}
                 </Text>
             </View>
         </View>

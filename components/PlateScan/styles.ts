@@ -87,4 +87,16 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 20,
     },
+    plateResultStyle: {
+        backgroundColor: 'rgba(0, 255, 0, 0.8)',
+        borderRadius: 8,
+        color: 'black',
+        fontSize: 24,
+        fontWeight: 'bold',
+        padding: 16,
+        textAlign: 'center',
+        marginBottom: 8,
+        minWidth: 200,
+        letterSpacing: 2,
+    },
 });
