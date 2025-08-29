@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, TouchableOpacity } from "react-native";
 import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
 import { styles } from "./styles";
 import { usePlateScanner } from "./hooks/usePlateScanner";
@@ -9,7 +9,7 @@ export default function PlateScan() {
     const cameraRef = useRef<Camera>(null);
     const { hasPermission, requestPermission } = useCameraPermission();
     const [isCameraActive, setIsCameraActive] = useState(false);
-    const { isCapturing } = usePlateScanner(cameraRef);
+    const { isCapturing, toggleCapture, plate, clearPlate } = usePlateScanner(cameraRef);
 
     useEffect(() => {
         const setupCamera = async () => {
@@ -63,9 +63,38 @@ export default function PlateScan() {
                 photo={true}
             />
             <View style={styles.overlayContainer}>
-                <Text style={styles.plateStyle}>
-                    {isCapturing ? "Capturando fotos..." : "Captura pausada"}
-                </Text>
+                {plate ? (
+                    <>
+                        <Text style={styles.plateResultStyle}>
+                            {plate}
+                        </Text>
+                        <TouchableOpacity 
+                            style={[styles.scanButton, styles.clearButton]} 
+                            onPress={clearPlate}
+                        >
+                            <Text style={styles.scanButtonText}>
+                                Limpar e Escanear Nova Placa
+                            </Text>
+                        </TouchableOpacity>
+                    </>
+                ) : (
+                    <>
+                        <Text style={styles.plateStyle}>
+                            {isCapturing ? "Procurando placas..." : "Captura pausada"}
+                        </Text>
+                        
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity 
+                                style={styles.scanButton} 
+                                onPress={toggleCapture}
+                            >
+                                <Text style={styles.scanButtonText}>
+                                    {isCapturing ? "Pausar" : "Iniciar"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                )}
             </View>
         </View>
     );
