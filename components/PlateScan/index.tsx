@@ -3,6 +3,7 @@ import { View, Text, Alert, TouchableOpacity } from "react-native";
 import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
 import { styles } from "./styles";
 import { usePlateScanner } from "./hooks/usePlateScanner";
+import ScannerOverlay from "./ScannerOverlay";
 
 export default function PlateScan() {
     const backCamera = useCameraDevice('back');
@@ -62,6 +63,15 @@ export default function PlateScan() {
                 isActive={isCameraActive}
                 photo={true}
             />
+            {/* Overlay com furo arredondado usando SVG */}
+            <ScannerOverlay
+                scanAreaWidth={250}
+                scanAreaHeight={200}
+                borderRadius={20}
+                overlayColor="rgba(0, 0, 0, 0.6)"
+            />
+            
+            {/* Controles na parte inferior */}
             <View style={styles.overlayContainer}>
                 {plate ? (
                     <>

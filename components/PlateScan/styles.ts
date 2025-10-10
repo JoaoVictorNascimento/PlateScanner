@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
         left: 20,
         right: 20,
         alignItems: 'center',
+        zIndex: 10,
     },
     plateStyle: {
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
