@@ -1,103 +1,89 @@
 import { StyleSheet } from "react-native";
+import { DefaultTheme, Typography } from "@moov/ds";
+import styled from "styled-components/native";
 
 export const styles = StyleSheet.create({
-    cameraStyle: {
-        flex: 1,
+  actions: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    justifyContent: "center",
+  },
+  cameraStyle: {
+    flex: 1,
+  },
+  clearButton: {
+    backgroundColor: 'red',
+  },
+  loadingContainer: {
+    alignItems: "center",
+    backgroundColor: 'black',
+    flex: 1,
+    justifyContent: "center",
+  },
+  loadingText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 20,
+    textAlign: "center",
+  },
+  overlayContainer: {
+    backgroundColor: 'black',
+    height: "100%",
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
+  },
+  plateMessage: {
+    backgroundColor: 'black',
+    borderRadius: 8,
+    color: DefaultTheme.colors.white,
+    fontSize: 18,
+    marginBottom: 16,
+    padding: 12,
+    textAlign: "center",
+  },
+  plateScanContainer: {
+    flex: 1,
+  },
+  scanButton: {
+    backgroundColor: 'blue',
+    borderRadius: 8,
+    elevation: 2,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    plateScanContainer: {
-        flex: 1,
-    },
-    overlayContainer: {
-        position: 'absolute',
-        bottom: 40,
-        left: 20,
-        right: 20,
-        alignItems: 'center',
-        zIndex: 10,
-    },
-    plateStyle: {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        borderRadius: 8,
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        padding: 12,
-        textAlign: 'center',
-        marginBottom: 16,
-        minWidth: 200,
-    },
-    scanButton: {
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-    },
-    scanButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        gap: 8,
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-    },
-    clearButton: {
-        backgroundColor: '#FF3B30',
-    },
-    resetButton: {
-        backgroundColor: '#34C759',
-        borderRadius: 8,
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-    },
-    resetButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#000',
-    },
-    loadingText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        padding: 20,
-    },
-    plateResultStyle: {
-        backgroundColor: 'rgba(0, 255, 0, 0.8)',
-        borderRadius: 8,
-        color: 'black',
-        fontSize: 24,
-        fontWeight: 'bold',
-        padding: 16,
-        textAlign: 'center',
-        marginBottom: 8,
-        minWidth: 200,
-        letterSpacing: 2,
-    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  scanButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
+
+export const PlateMessage = styled(Typography).attrs((props) => {
+  return {
+    size: props.theme.fontSizes.M,
+    weight: props.theme.fontWeight.normal,
+    color: props.theme.colors.gray.contrast,
+    ...props,
+  };
+})`
+  line-height: 24px;
+`;
