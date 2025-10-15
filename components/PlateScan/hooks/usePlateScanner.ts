@@ -6,7 +6,7 @@ import { Camera } from "react-native-vision-camera";
 const PLATE_REGEX = /[A-Z]{3}[0-9][0-9A-Z][0-9]{2}/;
 
 // Função para processar OCR da foto
-const processPhotoOCR = async (photoPath: string): Promise<string | null> => {
+export const processPhotoOCR = async (photoPath: string): Promise<string | null> => {
   try {
     // Converter file path para URI que o ML Kit consegue ler
     const fileUri = "file://" + photoPath;
