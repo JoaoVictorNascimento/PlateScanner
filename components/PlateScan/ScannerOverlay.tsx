@@ -19,7 +19,7 @@ export default function ScannerOverlay({
   const scanY = centerY - scanAreaHeight / 2.5;
 
   return (
-    <Svg style={StyleSheet.absoluteFill}>
+    <Svg style={StyleSheet.absoluteFill} testID="scanner-overlay">
       <Defs>
         <Mask id="hole">
           <Rect width="100%" height="100%" fill="white" />
@@ -31,6 +31,7 @@ export default function ScannerOverlay({
             rx={borderRadius}
             ry={borderRadius}
             fill="black"
+            testID="scan-area"
           />
         </Mask>
       </Defs>
@@ -39,6 +40,7 @@ export default function ScannerOverlay({
         height="100%"
         fill="black"
         mask="url(#hole)"
+        testID="overlay-background"
       />
     </Svg>
   );
