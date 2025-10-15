@@ -7,4 +7,41 @@ module.exports = {
     '^@react-native-ml-kit/text-recognition$': '<rootDir>/__mocks__/@react-native-ml-kit/text-recognition.js',
     '^react-native-vision-camera$': '<rootDir>/__mocks__/react-native-vision-camera.js',
   },
+  collectCoverage: false,
+  collectCoverageFrom: [
+    'components/**/*.{ts,tsx}',
+    '!components/**/*.d.ts',
+    '!components/**/index.ts',
+    '!components/**/styles.ts',
+    '!**/node_modules/**',
+    '!**/__tests__/**',
+    '!**/__mocks__/**',
+    '!**/android/**',
+    '!**/ios/**',
+    '!**/coverage/**',
+    '!**/build/**',
+    '!**/dist/**'
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html', 'json'],
+  coverageThreshold: {
+    global: {
+      branches: 35,
+      functions: 60,
+      lines: 55,
+      statements: 55
+    }
+  },
+  testMatch: [
+    '**/__tests__/**/*.(test|spec).(ts|tsx|js|jsx)',
+    '**/*.(test|spec).(ts|tsx|js|jsx)'
+  ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/android/',
+    '/ios/',
+    '/coverage/',
+    '/build/',
+    '/dist/'
+  ]
 };
