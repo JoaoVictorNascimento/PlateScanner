@@ -72,7 +72,7 @@ export default function PlateScan() {
       onChangePlate?.(plate);
       goBack();
     }
-  }, [plate]);
+  }, [plate, goBack, onChangePlate]);
 
   const handleFlash = () => setFlashOn(!isFlashOn);
 

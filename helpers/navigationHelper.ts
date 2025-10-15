@@ -2,7 +2,7 @@ import {
     useNavigation as useReactNavigation,
     ParamListBase,
   } from "@react-navigation/native";
-  import { NavigationPropsWithReplace } from "../types/navigation";
+  import { NavigationPropsWithReplace } from "./types";
   
   /**
    * Custom navigation hook with pre-defined typings
