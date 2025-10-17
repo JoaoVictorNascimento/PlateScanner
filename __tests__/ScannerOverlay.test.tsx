@@ -27,6 +27,11 @@ describe('ScannerOverlay', () => {
     expect(getByTestId('scanner-overlay')).toBeTruthy();
     expect(getByTestId('scan-area')).toBeTruthy();
     expect(getByTestId('overlay-background')).toBeTruthy();
+    
+    // For SVG elements, we need to check props instead of styles
+    const scanArea = getByTestId('scan-area');
+    expect(scanArea.props.width).toBe(customWidth);
+    expect(scanArea.props.height).toBe(customHeight);
   });
 
   it('should render with custom border radius', () => {
@@ -59,6 +64,13 @@ describe('ScannerOverlay', () => {
     expect(getByTestId('scanner-overlay')).toBeTruthy();
     expect(getByTestId('scan-area')).toBeTruthy();
     expect(getByTestId('overlay-background')).toBeTruthy();
+    
+    // For SVG elements, we need to check props instead of styles
+    const scanArea = getByTestId('scan-area');
+    expect(scanArea.props.width).toBe(customWidth);
+    expect(scanArea.props.height).toBe(customHeight);
+    expect(scanArea.props.rx).toBe(customBorderRadius);
+    expect(scanArea.props.ry).toBe(customBorderRadius);
   });
 
   it('should render with zero scan area dimensions', () => {

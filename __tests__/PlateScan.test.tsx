@@ -1,20 +1,9 @@
-let mockHasPermission = true;
-let mockBackCamera = { id: 'back-camera', name: 'back' };
-let mockRequestPermission = jest.fn().mockResolvedValue(true);
-
-jest.mock('react-native-vision-camera', () => {
-  const React = require('react');
-  const { View } = require('react-native');
-  
-  return {
-    Camera: ({ children, ...props }: any) => React.createElement(View, { testID: "camera", ...props }, children),
-    useCameraDevice: () => mockBackCamera,
-    useCameraPermission: () => ({
-      hasPermission: mockHasPermission,
-      requestPermission: mockRequestPermission,
-    }),
-  };
-});
+import {
+  setMockHasPermission,
+  setMockBackCamera,
+  setMockRequestPermission,
+  resetCameraMocks,
+} from '../jest.setup';
 
 jest.mock('../components/PlateScan/hooks/usePlateScanner');
 jest.mock('../helpers/navigationHelper');
@@ -83,9 +72,7 @@ describe('PlateScan', () => {
     jest.clearAllMocks();
     jest.useFakeTimers();
     
-    mockHasPermission = true;
-    mockBackCamera = { id: 'back-camera', name: 'back' };
-    mockRequestPermission = jest.fn().mockResolvedValue(true);
+    resetCameraMocks();
     mockUsePlateScanner.mockReturnValue({
       plate: null,
       isCapturing: false,
@@ -132,7 +119,7 @@ describe('PlateScan', () => {
   });
 
   it('should render correctly with camera permission', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -146,7 +133,7 @@ describe('PlateScan', () => {
   });
 
   it('should show loading message when there is no permission', () => {
-    mockHasPermission = false;
+    setMockHasPermission(false);
 
     const { getByText } = render(<PlateScan />);
     
@@ -154,7 +141,7 @@ describe('PlateScan', () => {
   });
 
   it('should show loading message when there is no camera available', () => {
-    mockBackCamera = null as any;
+    setMockBackCamera(null as any);
 
     const { getByText } = render(<PlateScan />);
     
@@ -162,17 +149,18 @@ describe('PlateScan', () => {
   });
 
   it('should request camera permission on mount', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    const mockRequest = jest.fn().mockResolvedValue(true);
+    setMockRequestPermission(mockRequest);
 
     render(<PlateScan />);
 
     await waitFor(() => {
-      expect(mockRequestPermission).toHaveBeenCalled();
+      expect(mockRequest).toHaveBeenCalled();
     });
   });
 
   it('should show alert when permission is denied', async () => {
-    mockRequestPermission.mockResolvedValue(false);
+    setMockRequestPermission(jest.fn().mockResolvedValue(false));
     const alertSpy = jest.spyOn(Alert, 'alert');
 
     render(<PlateScan />);
@@ -188,7 +176,7 @@ describe('PlateScan', () => {
 
   it('should show alert when there is an error requesting permission', async () => {
     const error = new Error('Erro de permissão');
-    mockRequestPermission.mockRejectedValue(error);
+    setMockRequestPermission(jest.fn().mockRejectedValue(error));
     const alertSpy = jest.spyOn(Alert, 'alert');
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
@@ -220,7 +208,7 @@ describe('PlateScan', () => {
   });
 
   it('should toggle flash when button is pressed', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -238,7 +226,7 @@ describe('PlateScan', () => {
   });
 
   it('should call goBack when back button is pressed', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -267,7 +255,7 @@ describe('PlateScan', () => {
   });
 
   it('should show ScannerOverlay after orientation timer', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { queryByTestId, getByTestId } = render(<PlateScan />);
 
@@ -283,7 +271,7 @@ describe('PlateScan', () => {
   });
 
   it('should pass correct props to ScannerOverlay', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -298,7 +286,7 @@ describe('PlateScan', () => {
   });
 
   it('should use theme correctly for PlateMessage', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -350,7 +338,7 @@ describe('PlateScan', () => {
   });
 
   it('should set camera as active when permission is granted', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -361,7 +349,7 @@ describe('PlateScan', () => {
   });
 
   it('should render icons with correct props', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId } = render(<PlateScan />);
 
@@ -377,7 +365,7 @@ describe('PlateScan', () => {
   });
 
   it('should toggle between flash icons correctly', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
 
     const { getByTestId, queryByTestId } = render(<PlateScan />);
 
@@ -399,7 +387,7 @@ describe('PlateScan', () => {
 
   it('should handle console error during camera setup', async () => {
     const error = new Error('Erro de setup');
-    mockRequestPermission.mockRejectedValue(error);
+    setMockRequestPermission(jest.fn().mockRejectedValue(error));
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
     render(<PlateScan />);
@@ -412,7 +400,7 @@ describe('PlateScan', () => {
   });
 
   it('should render correctly with all dependencies mocked', async () => {
-    mockRequestPermission.mockResolvedValue(true);
+    setMockRequestPermission(jest.fn().mockResolvedValue(true));
     mockUsePlateScanner.mockReturnValue({
       plate: null,
       isCapturing: false,

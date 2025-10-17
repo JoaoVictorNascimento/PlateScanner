@@ -5,7 +5,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^@react-native-ml-kit/text-recognition$': '<rootDir>/__mocks__/@react-native-ml-kit/text-recognition.js',
-    '^react-native-vision-camera$': '<rootDir>/__mocks__/react-native-vision-camera.js',
     '^react-native-orientation-locker$': '<rootDir>/__mocks__/react-native-orientation-locker.js',
     '^@moov/ds$': '<rootDir>/__mocks__/@moov/ds.js',
   },
@@ -45,5 +44,6 @@ module.exports = {
     '/coverage/',
     '/build/',
     '/dist/'
-  ]
+  ],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 };
